@@ -1,0 +1,9 @@
+.project
+.classpath
+.settings/
+.DS_Store
+target/
+build/
+.gradle/
+tim*.log*
+.jruby/
