@@ -89,9 +89,6 @@ public class JVEditor {
         fileMenu.setMnemonic(getMnemonic("FileMenu.file_mnemonic"));
         fileMenu.getAccessibleContext().setAccessibleDescription(getString("FileMenu.accessible_description"));
 
-        createMenuItem(fileMenu, "FileMenu.about_label", "FileMenu.about_mnemonic",
-                       "FileMenu.about_accessible_description", new AboutAction(this));
-
         fileMenu.addSeparator();
 
         createMenuItem(fileMenu, "FileMenu.open_label", "FileMenu.open_mnemonic",
@@ -148,7 +145,7 @@ public class JVEditor {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		JVEditor jve = new JVEditor();
+		new JVEditor();
 	}
 	
 	private static String getMidiDevices(Info[] midiInfo) {
@@ -175,73 +172,5 @@ public class JVEditor {
     public ImageIcon createImageIcon(String filename, String description) {
         String path = "/images/" + filename;
         return new ImageIcon(getClass().getResource(path));
-    }
-
-    class AboutAction extends AbstractAction {
-        JVEditor jve;
-        protected AboutAction(JVEditor jve) {
-            super("AboutAction");
-            this.jve = jve;
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            if(aboutBox == null) {
-                // JPanel panel = new JPanel(new BorderLayout());
-                JPanel panel = new AboutPanel(jve);
-                panel.setLayout(new BorderLayout());
-
-                aboutBox = new JDialog(jve.getFrame(), getString("AboutBox.title"), false);
-                aboutBox.setResizable(false);
-                aboutBox.getContentPane().add(panel, BorderLayout.CENTER);
-
-                // JButton button = new JButton(getString("AboutBox.ok_button_text"));
-                JPanel buttonpanel = new JPanel();
-                buttonpanel.setBorder(new javax.swing.border.EmptyBorder(0, 0, 3, 0));
-                buttonpanel.setOpaque(false);
-                JButton button = (JButton) buttonpanel.add(
-                    new JButton(getString("AboutBox.ok_button_text"))
-                );
-                panel.add(buttonpanel, BorderLayout.SOUTH);
-
-                button.addActionListener(new OkAction(aboutBox));
-            }
-            aboutBox.pack();
-            aboutBox.setLocationRelativeTo(getFrame());
-            aboutBox.show();
-        }
-    }
-
-    class OkAction extends AbstractAction {
-        JDialog aboutBox;
-
-        protected OkAction(JDialog aboutBox) {
-            super("OkAction");
-            this.aboutBox = aboutBox;
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            aboutBox.setVisible(false);
-        }
-    }
-
-    class AboutPanel extends JPanel {
-        ImageIcon aboutimage = null;
-        JVEditor jve = null;
-
-        public AboutPanel(JVEditor jve) {
-            this.jve = jve;
-            aboutimage = jve.createImageIcon("About.jpg", "AboutBox.accessible_description");
-            setOpaque(false);
-        }
-
-        public void paint(Graphics g) {
-            aboutimage.paintIcon(this, g, 0, 0);
-            super.paint(g);
-        }
-
-        public Dimension getPreferredSize() {
-            return new Dimension(aboutimage.getIconWidth(),
-                                 aboutimage.getIconHeight());
-        }
     }
 }
