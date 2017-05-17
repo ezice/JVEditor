@@ -6,12 +6,20 @@ import javax.sound.midi.Receiver;
 import javax.sound.midi.SysexMessage;
 import javax.sound.midi.Transmitter;
 
+/**
+ * This class handles all of the communication with the synth.  By handling it in a single place, we prevent memory leaks.
+ * @author Rick
+ *
+ */
 public class JV1010 {
 
 	private final static JV1010 INSTANCE = new JV1010();
 	
 	private MidiDevice jv1010OutputDevice;
 	private MidiDevice jv1010InputDevice;
+	private Receiver sendingReceiver;
+	private Transmitter receivingTransmitter;
+	private Receiver receivingReceiver;
 	
 	private JV1010 () {
         MidiDevice.Info midiInfo[] = MidiSystem.getMidiDeviceInfo();
@@ -21,6 +29,10 @@ public class JV1010 {
 			jv1010OutputDevice.open();
 			jv1010InputDevice = MidiSystem.getMidiDevice(midiInfo[1]);
 			jv1010InputDevice.open();
+	    	sendingReceiver = jv1010OutputDevice.getReceiver();
+	    	receivingTransmitter = jv1010InputDevice.getTransmitter();
+	    	receivingReceiver = new DumpReceiver(System.out);
+	    	receivingTransmitter.setReceiver(receivingReceiver);	    	
 		} catch (MidiUnavailableException e) {
 			e.printStackTrace();
 		}
@@ -51,19 +63,14 @@ public class JV1010 {
     	/*
     	 * Send the query
     	 */
-    	Receiver rec = jv1010OutputDevice.getReceiver();
     	byte[] identityMessageData = {(byte) 0xF0, 0x7E, 0x10, 0x06, 0x01, (byte) 0xF7};
     	SysexMessage message = new SysexMessage();
     	message.setMessage(identityMessageData, identityMessageData.length);
-    	rec.send(message, -1);
+    	sendingReceiver.send(message, -1);
 
     	/*
     	 * Get the response
     	 */
-    	
-    	Transmitter trans = jv1010InputDevice.getTransmitter();
-    	Receiver identityReceiver = new DumpReceiver(System.out);
-    	trans.setReceiver(identityReceiver);
     	
     	return identity;
 	}
