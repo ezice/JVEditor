@@ -45,72 +45,24 @@ public class JVEditor {
         menuBar = createMenus();
         frame.setJMenuBar(menuBar);
 
-        MidiDevice.Info midiInfo[] = MidiSystem.getMidiDeviceInfo();
-
         /*
 		 * Create an Edit/Preferences menu where a user can select the desired MIDI device.
 		 */
-		JTextArea textArea = new JTextArea(getMidiDevices(midiInfo));
-		frame.add(textArea);
+//		JTextArea textArea = new JTextArea(getMidiDevices(midiInfo));
+//		frame.add(textArea);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 300);
 		frame.setVisible(true);
 		
-		MidiDevice jv1010OutputDevice;
-		MidiDevice jv1010InputDevice;
-		String identity = "";
+		JV1010 jv1010 = JV1010.getInstance();
 		
 		try {
-			jv1010OutputDevice = MidiSystem.getMidiDevice(midiInfo[4]);
-			jv1010OutputDevice.open();
-			jv1010InputDevice = MidiSystem.getMidiDevice(midiInfo[1]);
-			jv1010InputDevice.open();
-			identity = getIdentity(jv1010OutputDevice, jv1010InputDevice);
+			jv1010.getIdentity();
 		} catch (MidiUnavailableException | InvalidMidiDataException e) {
 			e.printStackTrace();
 		}
-		
-		LOG.info(identity);
     }
     
-    /**
-     * Get back identifying information about our JV-1010.  This method is really being written to test out our communications.
-     * @param jv1010OutputDevice
-     * @return
-     * @throws MidiUnavailableException
-     * @throws InvalidMidiDataException
-     */
-    private String getIdentity(MidiDevice jv1010OutputDevice, MidiDevice jv1010InputDevice) throws MidiUnavailableException, InvalidMidiDataException {
-    	
-    	String identity = "";
-    	
-    	/*
-    	 * The receiver/transmitter structure is a little confusing to me.  We have two receivers and one transmitter:
-    	 * 1. rec (jv1010Device.getReceiver() is the stream connected to the MIDI in port on the jv1010.
-    	 * 2. trans (jv1010Device.getTransmitter() is the stream connected to the MIDI out port on the jv1010.
-    	 * 3. identityReceiver (new DumpReceiver()) is the confusing one.  It's there to interpret anything returned from
-    	 * the trans stream -- turns out the only way to get data out of a device is to bind a receiver to it.
-    	 */
-    	/*
-    	 * Send the query
-    	 */
-    	Receiver rec = jv1010OutputDevice.getReceiver();
-    	byte[] identityMessageData = {(byte) 0xF0, 0x7E, 0x10, 0x06, 0x01, (byte) 0xF7};
-    	SysexMessage message = new SysexMessage();
-    	message.setMessage(identityMessageData, identityMessageData.length);
-    	rec.send(message, -1);
-
-    	/*
-    	 * Get the response
-    	 */
-    	
-    	Transmitter trans = jv1010InputDevice.getTransmitter();
-    	Receiver identityReceiver = new DumpReceiver(System.out);
-    	trans.setReceiver(identityReceiver);
-    	
-    	return identity;
-	}
-
 	/**
      * Create a frame for JVEDItor to reside in.
      */
