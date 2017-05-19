@@ -8,11 +8,7 @@ import java.util.MissingResourceException;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiDevice.Info;
-import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Receiver;
-import javax.sound.midi.SysexMessage;
-import javax.sound.midi.Transmitter;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -20,7 +16,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JTextArea;
 
 import org.apache.log4j.Logger;
 
@@ -76,67 +71,16 @@ public class JVEditor {
         JMenuItem mi;
         // ***** create the menubar ****
         JMenuBar menuBar = new JMenuBar();
-        menuBar.getAccessibleContext().setAccessibleName(
-            getString("MenuBar.accessible_description"));
 
         // ***** create File menu
-        JMenu fileMenu = (JMenu) menuBar.add(new JMenu(getString("FileMenu.file_label")));
-        fileMenu.setMnemonic(getMnemonic("FileMenu.file_mnemonic"));
-        fileMenu.getAccessibleContext().setAccessibleDescription(getString("FileMenu.accessible_description"));
-
+        JMenu fileMenu = (JMenu) menuBar.add(new JMenu("File"));
         fileMenu.addSeparator();
 
-        createMenuItem(fileMenu, "FileMenu.open_label", "FileMenu.open_mnemonic",
-                       "FileMenu.open_accessible_description", null);
-
-        createMenuItem(fileMenu, "FileMenu.save_label", "FileMenu.save_mnemonic",
-                       "FileMenu.save_accessible_description", null);
-
-        createMenuItem(fileMenu, "FileMenu.save_as_label", "FileMenu.save_as_mnemonic",
-                       "FileMenu.save_as_accessible_description", null);
+        fileMenu.add("Open");
+        fileMenu.add("Save");
+        fileMenu.add("Save As");
         return menuBar;
 	}
-
-    /**
-     * Creates a generic menu item
-     */
-    public JMenuItem createMenuItem(JMenu menu, String label, String mnemonic,
-                               String accessibleDescription, Action action) {
-        JMenuItem mi = (JMenuItem) menu.add(new JMenuItem(getString(label)));
-        mi.setMnemonic(getMnemonic(mnemonic));
-        mi.getAccessibleContext().setAccessibleDescription(getString(accessibleDescription));
-        mi.addActionListener(action);
-        if(action == null) {
-            mi.setEnabled(false);
-        }
-        return mi;
-    }
-
-    /**
-     * Returns a mnemonic from the resource bundle. Typically used as
-     * keyboard shortcuts in menu items.
-     */
-    public char getMnemonic(String key) {
-        return (getString(key)).charAt(0);
-    }
-
-    /**
-     * This method returns a string from the demo's resource bundle.
-     */
-    public String getString(String key) {
-        String value = null;
-        try {
-            value = TextAndMnemonicUtils.getTextAndMnemonicString(key);
-        } catch (MissingResourceException e) {
-            System.out.println("java.util.MissingResourceException: Couldn't find value for: " + key);
-        }
-        
-        if(value == null) {
-            value = "Could not find resource: " + key + "  ";
-        }
-        
-        return value;
-    }
 
 	/**
 	 * @param args
