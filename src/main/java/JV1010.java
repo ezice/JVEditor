@@ -21,6 +21,11 @@ public class JV1010 {
 	private Transmitter receivingTransmitter;
 	private Receiver receivingReceiver;
 	
+	// JV1010 State
+	private JV1010System system;
+	private JV1010TemporaryArea temporaryArea;
+	private JV1010UserPresets userPresets;
+	
 	private JV1010 () {
         MidiDevice.Info midiInfo[] = MidiSystem.getMidiDeviceInfo();
         
