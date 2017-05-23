@@ -31,11 +31,38 @@ public class SystemCommon {
 		CHANNEL, POLY, CHANNELPOLY
 	}
 	
-	public enum SystemControlSource {
+	public enum ShortControlList {
 		CC01, CC02, CC03, CC04, CC05, CC07, CC08, CC09, CC10, CC11, CC12, CC13, CC14, CC15, CC16, CC17, CC18, CC19, CC20, CC21,
 		CC22, CC23, CC24, CC25, CC26, CC27, CC28, CC29, CC30, CC31, CC64, CC65, CC66, CC67, CC68, CC69, CC70, CC71, CC72, CC73,
 		CC74, CC75, CC76, CC77, CC78, CC79, CC80, CC81, CC82, CC83, CC84, CC85, CC86, CC87, CC88, CC89, CC90, CC91, CC92, CC93,
 		CC94, CC95, PITCHBEND, AFTERTOUCH
+	}
+	
+	public enum RhythmEditSource {
+		PANEL, PANELMIDI
+	}
+	
+	public enum PreviewSoundMode {
+		SINGLE, CHORD, PHRASE
+	}
+	
+	private enum KeyboardSensitivity {
+		LIGHT, MEDIUM, HEAVY
+	}
+	
+	public enum PedalAssign {
+		CC01, CC02, CC03, CC04, CC05, CC07, CC08, CC09, CC10, CC11, CC12, CC13, CC14, CC15, CC16, CC17, CC18, CC19, CC20, CC21,
+		CC22, CC23, CC24, CC25, CC26, CC27, CC28, CC29, CC30, CC31, CC64, CC65, CC66, CC67, CC68, CC69, CC70, CC71, CC72, CC73,
+		CC74, CC75, CC76, CC77, CC78, CC79, CC80, CC81, CC82, CC83, CC84, CC85, CC86, CC87, CC88, CC89, CC90, CC91, CC92, CC93,
+		CC94, CC95, PITCHBEND, AFTERTOUCH, PROG_UP, PROG_DOWN, START_STOP, PUNCH_IN_OUT, TAP_TEMPO, OCTAVE_UP, OCTAVE_DOWN 
+	}
+	
+	public enum PedalOutputMode {
+		OFF, INT, MIDI, INT_MIDI
+	}
+	
+	public enum PedalPolarity {
+		STANDARD, REVERSE
 	}
 	
 	private SoundMode soundMode;
@@ -55,6 +82,24 @@ public class SystemCommon {
 	private HoldControlSource peakControlSource;
 	private VolumeControlSource volumeControlSource;
 	private AftertouchSource aftertouchSource;
-	private SystemControlSource systemControlSource1, systemControlSource2;
-	
+	private ShortControlList systemControlSource1, systemControlSource2;
+	private boolean receiveProgramChange, receiveBankSelect, teceiveControlChange, receiveModulation, receiveVolume, receiveHold1, receivePitchBend, receiveAftertouch;
+	private int controlChannel, patchReceiveChannel;
+	private RhythmEditSource rhythmEditSource;
+	private PreviewSoundMode previewSoundMode;
+	private int previewNoteSet1, PreviewVelocitySet1, previewNoteSet2, PreviewVelocitySet2, previewNoteSet3, PreviewVelocitySet3, previewNoteSet4, PreviewVelocitySet4;
+	private boolean transmitProgramChange, transmitBankSelect;
+	private int patchTransmitChannel;
+	private boolean transposeSwitch;
+	private int transposeValue, octaveShift, keyboardVelocity;
+	private KeyboardSensitivity keyboardSensitivity;
+	private int aftertouchSensitivity;
+	private PedalAssign pedal1Assign, pedal2Assign, pedal3Assign, pedal4Assign;
+	private PedalOutputMode pedal1OutputMode, pedal2OutputMode, pedal3OutputMode, pedal4OutputMode, c1OutputMode, c2OutputMode, holdPedalOutputMode;
+	private PedalPolarity pedal1Polarity, pedal2Polarity, pedal3Polarity, pedal4Polarity, holdPedalPolarity;
+	private ShortControlList c1Assign, c2Assign;
+	private boolean bankSelectGroupSwitch[] = new boolean[8];
+	private int bankSelectGroupMSB[] = new int[8], bankSelectGroupLSB[] = new int[8];
+	private int arpeggioStyle, arpeggioMotif, arpeggioBeatPattern, arpeggioAccentRate, arpeggioShuffleRate, arpeggioKeyboardVelocity, arpeggioOctaveRange, arpeggioPartNumber;
+	private int systemTempo;
 }
