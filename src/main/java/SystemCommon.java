@@ -15,10 +15,6 @@ public class SystemCommon {
 		PRB17, PRB18, PRB19, PRB20, PRB21, PRB22, PRB23, PRB24, PRB25, PRB26, PRB27, PRB28, PRB29, PRB30, PRB31, PRB32
 	}
 	
-	public enum PatchGroupType {
-		USERPRESET, PCM, EXP
-	}
-	
 	public enum HoldControlSource {
 		OFF, HOLD1, SOSTENUTO, HOLD2
 	}
