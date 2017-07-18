@@ -9,10 +9,10 @@ public class JV1010TemporaryArea {
 	public void setTemporaryPerformance(JV1010Performance temporaryPerformance) {
 		this.temporaryPerformance = temporaryPerformance;
 	}
-	public JV1010Patch getTemporaryPatch() {
+	public JV1010Patch[] getTemporaryPatch() {
 		return temporaryPatch;
 	}
-	public void setTemporaryPatch(JV1010Patch temporaryPatch) {
+	public void setTemporaryPatch(JV1010Patch[] temporaryPatch) {
 		this.temporaryPatch = temporaryPatch;
 	}
 }

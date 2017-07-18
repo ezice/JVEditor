@@ -3,10 +3,6 @@ public class EFXSettings {
 		MIX, DIRECT1, DIRECT2
 	}
 
-	public enum EFXControlSource {
-		OFF, SYSCTRL1, SYSCTRL2, MODULATION, BREATH, FOOT, VOLUME, PAN, EXPRESSION, PITCH_BEND, AFTERTOUCH
-	}
-	
 	public enum ChorusOutput {
 		MIX, REV, MIX_REV
 	}
