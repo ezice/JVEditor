@@ -44,7 +44,7 @@ public class PatchTone {
 		RPD600, RPD700, RPD800, RPD900, RPD1000, RPD1100, RPD1200
 	}
 	
-	public enum PitchKeyFollow {
+	public enum KeyFollow {
 		PKF_100, PKF_70, PKF_50, PKF_30, PKF_10, PKF0, PKF10, PKF20, PKF30, PKF40, PKF50, PKF70, PKF100, PKF120, PKF150, PKF200
 	}
 	
@@ -54,6 +54,17 @@ public class PatchTone {
 	
 	public enum EnvelopeTime {
 		ET_100, ET_70, ET_50, ET_40, ET_30, ET_20, ET_10, ET0, ET10, ET20, ET30, ET40, ET50, ET70, ET100
+	}
+	
+	public enum FilterType {
+		OFF, LPF, BPF, HPF, PKG
+	}
+
+	public enum Envelope {
+		int envelopeDepth, envelopeVelocitySensitivity, envelopeTimeKeyFollow;
+		int[] envelopeTime = new int[4];
+		int[] envelopeLevel = new int[4];
+		int[] lFODepth = new int[2];
 	}
 	
 	boolean toneSwitch;
@@ -74,11 +85,14 @@ public class PatchTone {
 	LFO[] lfo = new LFO[2];
 	int coarseTune, fineTune;
 	RandomPitchDepth randomPitchDepth;
-	PitchKeyFollow pitchKeyFollow;
-	int pitchEnvelopeDepth, pitchEnvelopeVelocitySensitivity, pitchEnvelopeTimeKeyFollow;
-	int pitchEnvelopeTime = new int[4];
-	int pitchEnvelopeLevel = new int[4];
-	int pitchLFODepth = new int[2];
+	KeyFollow pitchKeyFollow;
+	Envelope pitchEnvelope;
+	FilterType filterType;
+	int cutoffFrequency;
+	KeyFollow cutoffKeyFollow;
+	Envelope filterEnvelope;
+	
+	
 	EnvelopeTime pitchEnvelopeVelocityTime1, pitchEnvelopeVelocityTime4;
 	int randomPanDepth, alternatePanDepth, panLFO1Depth, panLFO2Depth;
 	OutputAssign outputAssign;
