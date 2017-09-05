@@ -20,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
 import org.apache.log4j.Logger;
 
@@ -56,7 +57,7 @@ public class JVEditor {
         modePanel.setForeground(Color.WHITE);
         modePanel.setBackground(Color.DARK_GRAY);
         modePanel.setLayout(new GridLayout(4, 1));
-        JLabel modeLabel = new JLabel("Mode"); 
+        JLabel modeLabel = new JLabel("Mode", SwingConstants.CENTER); 
         modeLabel.setForeground(Color.WHITE);
         modePanel.add(modeLabel);
         JRadioButton radioButton;
@@ -76,6 +77,7 @@ public class JVEditor {
         radioButton.setActionCommand("GM");
         buttonGroup.add(radioButton);
         frame.getContentPane().add(modePanel, BorderLayout.WEST);
+        frame.pack();
         
         /*
 		 * Create an Edit/Preferences menu where a user can select the desired MIDI device.
